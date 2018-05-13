@@ -1,0 +1,114 @@
+\documentclass{article}
+\usepackage{amsmath, amssymb}
+
+\title{Towards a Neural Game Theory}
+
+\author{Eric Purdy}
+
+\begin{document}
+
+\maketitle
+
+\section{Some puzzles}
+
+\begin{itemize}
+\item Why is it that approximately 50\% of people vote?
+\item Why is Bitcoin worth money?
+\end{itemize}
+
+\section{Toy model of voting}
+
+Imagine that we have $n$ voters and $k$ agent fragments, with $n \gg k$.
+
+Let us denote the agent fragment values by $x \in \mathbb{R}^k$.
+
+We posit the following model, which for reasons that will become obvious we
+call the Brightside Model. Let $\mathrm{eager}_i$ be the eagerness of agent $i$
+to vote, expressed as a probability that the agent will vote. Let
+$\mathrm{opinion}_i$ be the opinion of the agent, expressed on an axis from $1$
+(reasonable) to $-1$ (shitty).
+\begin{align*}
+\mathrm{eager}_i &= \sigma(A x + a) \\
+\mathrm{opinion}_i &= \tanh(B x + b) \\
+\intertext{We then have that the expected net vote is}
+\mathbb{E}\left[\mathrm{vote}_\mathrm{net}\right] &= \sum_i \mathrm{eager}_i \cdot \mathrm{sign} (\mathrm{opinion}_i) \\
+\intertext{and the expected outcome of the election is}
+\mathrm{outcome} &= \mathrm{sign} \left(\mathrm{vote}_\mathrm{net} \right) \\
+\intertext{and the expected reward of agent $i$ is then}
+\mathbb{E} \left[ r_i \right] &= -\mathrm{eager}_i + 10 \cdot \mathrm{opinion}_i \cdot \mathrm{outcome}  \\
+\intertext{We then consider the following problem:}
+\max_{A_i, a_i} \min_{x} \mathbb{E} \left[ r_i \right]
+\intertext{where $A_i, a_i$ refer to the portions of $A$ and $a$ that are under the control of agent $i$}
+\end{align*}
+We find that optimizing this objective via block gradient descent produces
+populations of agents that vote with probability that often settles near 50 \%.
+
+Note that we use a differentiable variant of the sign function:
+\begin{align*}
+\mathrm{sign}(\theta) &= \tanh \left(\theta / \epsilon \right)\\
+\end{align*}
+where $\epsilon$ is chosen to be $1e-6$.
+
+\section{Toy model of the stock market}
+
+TODO. Note that simulations are currently producing prices that sometimes
+spiral off to huge values or tiny values; how do we incorporate real-world
+limits on prices?
+
+\section{Simulation results}
+
+\begin{itemize}
+\item If we assign random values to $x$ rather than minimizing the expected
+  reward with respect to $x$, almost nobody votes.
+\item If we maximize the expected reward with respect to $x$, very few people
+  vote.
+\item If we minimize the expected reward with respect to $x$, an average of
+  $39.6\%$ people vote.
+\end{itemize}
+
+\section{Theoretical considerations}
+
+\subsection{What does $x$ represent?}
+
+$x$ seems to represent ``what everyone knows'' or ``social facts''. That is,
+things that have no existence independent of the minds of the agents, but which
+nevertheless have an existence that cannot be willed away by any single agent.
+
+\subsection{Why minimize over $x$?}
+
+It sort of makes sense if you think about it. We are maximizing our expected
+reward given the contents of everyone else's heads; we are pessimistic about
+the contents of everyone else's heads. It is thus a fairly standard application
+of the minimax rule: act so that you will do well given the worst-case value of
+every option.
+
+\subsection{How do people know the values they would need to know?}
+
+We suspect that there are some simple sufficient statistics that people could
+plausibly know. Need to calculate the gradients by hand to check this out
+though.
+
+\begin{align*}
+\frac{\partial \mathbb{E}\left[ r_i \right]}{\partial x} &=
+-\frac{\partial \mathrm{eager}_i}{\partial x} + 10 \cdot \frac{\partial \mathrm{opinion}_i}{\partial x} \cdot \mathrm{outcome} + 10 \cdot \mathrm{opinion}_i \cdot \frac{\partial \mathrm{outcome}}{\partial x} \\
+&= -\mathrm{eager}_i \left(1 - \mathrm{eager}_i \right) A_i +
+10 \cdot \left( 1 - \mathrm{opinion}_i ^ 2 \right) \cdot \mathrm{outcome} \\
+& \qquad + 10 \cdot \mathrm{opinion}_i \cdot \left(1 - \frac{\mathrm{outcome}^2}{\epsilon^2} \right) 
+\frac{\partial \mathrm{vote}_\mathrm{net}}{\partial x}\\
+\intertext{and}
+\frac{\partial \mathrm{vote}_\mathrm{net}}{\partial x} &= 
+\sum_j \left[ \frac{\partial \mathrm{eager}_j}{\partial x} \cdot \mathrm{sign} \left(\mathrm{opinion}_j\right) +
+\mathrm{eager}_j \cdot \frac{\partial \mathrm{sign} \left(\mathrm{opinion}_j\right)}{\partial x} \right] \\
+&= \sum_j \left[ \mathrm{eager}_j (1 - \mathrm{eager}_j) A_j \cdot \mathrm{sign} \left(\mathrm{opinion}_j\right) +
+\mathrm{eager}_j \cdot \left(1 - \frac{\mathrm{opinion}_j^2}{\epsilon^2}\right) B_j \right] \\
+\end{align*}
+
+\subsection{But people have free will!}
+
+The voting model is consistent with free will, since there is a free bias
+parameter for every agent. Every agent is thus free to adjust that parameter so
+that they almost always vote or almost always don't vote. Nevertheless, having
+to pick a behavior other than the default behavior is more difficult and
+therefore less likely in our simulations.
+
+\end{document}
