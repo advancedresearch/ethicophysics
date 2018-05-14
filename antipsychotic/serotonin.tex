@@ -258,7 +258,7 @@ perform its task.
 We use the implementation of the Taxi environment found in OpenAI Gym
 \cite{openai-gym}.
 
-\subsection{Results}
+\subsection{Main results}
 
 Here is a graph of an experiment we ran. The red line corresponds to the total
 reward experienced by the agent to date. The purple line corresponds to the
@@ -268,7 +268,80 @@ as ``borglet'' (an incompetent unbounded agent with exploration), ``borgie'' (a
 competent unbounded agent with exploration), and ``borg'' (a competent bounded
 agent without exploration).
 
+Here are the parameters we used:
+
+\begin{tabular}{|l|l|l|}
+\hline
+$\gamma$ & $0.95$ & future time-horizon\\
+$\sigma$ & $0.995$ & past time-horizon\\
+$\epsilon$ & $0.05$ & exploration\\
+$\alpha$ & $0.1$ & learning rate\\
+$S_0$ & $0$ & initial satisfaction\\
+tiebreak noise & $0.0001$ & \\
+initial value of $Q(s,a)$ & $-7$ &  ``optimism''\\
+$\mathrm{max\_reward\_desired}$ & $100.0$ &  ``ambition'', $10 * 10 = 100$ \\
+$\mathrm{mean\_reward\_desired}$ & $5.0$ & ``greed'' \\
+$\mathrm{patience}$ & $10$ & \\
+\hline
+\end{tabular}
+
 \includegraphics{borgies.png}
+
+\subsection{Ablation results}
+
+We performed various ablations by setting parameters to values other than those
+used in the ``Main results'' section.
+
+\subsubsection{No fear}
+Omitting the $F$ term from the definition of $\widetilde{Q}$\\
+\includegraphics{borgies_nofear.png}
+
+\subsubsection{$\alpha = 0.0001$}
+A very low learning rate\\
+\includegraphics{borgies_alpha0001.png}
+
+\subsubsection{$\epsilon = 0$}
+No exploration\\
+\includegraphics{borgies_epsilon0000.png}
+
+\subsubsection{$\gamma = 0.9999$}
+A very long horizon for reasoning about future rewards\\
+\includegraphics{borgies_gamma9999.png}
+
+\subsubsection{$\sigma=0.9999$}
+A very long horizon for reasoning about past rewards\\
+\includegraphics{borgies_sigma9999.png}
+
+\subsubsection{$S_0 = 9.9999$}
+A high initial value for $S$\\
+\includegraphics{borgies_inits99999.png}
+
+\subsubsection{Optimistic initialization}
+In the main results section, we used a pessimistic initialization of $-7$. Here
+we use an optimistic initialization of $10$.\\ 
+\includegraphics{borgies_optimism1000000.png}
+
+\subsubsection{Non-random tiebreaking}
+Setting tiebreak noise to $0$ so that numerically first optimal action is
+always selected.\\
+\includegraphics{borgies_tiebreak0000.png}
+
+\subsubsection{High ambition}
+$\mathrm{max\_reward\_desired} = 9999$\\
+\includegraphics{borgies_ambition99990000.png}
+
+\subsubsection{High greed}
+$\mathrm{mean\_reward\_desired} = 1000$\\
+\includegraphics{borgies_greed10000000.png}
+
+\subsubsection{Low patience}
+$\mathrm{patience} = 1$\\
+\includegraphics{borgies_patience10000.png}
+
+\section{Acknowledgments}
+
+We thank Patrick Lavictoire, Tom Silver, and Sven Nilsen for valuable
+discussions.
 
 \bibliography{serotonin} 
 \bibliographystyle{acm}
