@@ -1,0 +1,211 @@
+\documentclass{article}
+\usepackage{leonine,amsmath,amssymb,amsthm,graphicx}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+% Prints a trailing space in a smart way.
+\usepackage{xspace}
+% Inserts a blank page
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+% \usepackage{units}
+% Typesets the font size, leading, and measure in the form of 10/12x26 pc.
+\newcommand{\measure}[3]{#1/#2$\times$\unit[#3]{pc}}
+
+\theoremstyle{definition}
+\newtheorem{pred}[thm]{Prediction}
+
+\title{Askesis: Negative Pathway} \author{Eric Purdy}
+
+\begin{document}
+
+\maketitle
+
+
+\subsection{Granular cells encode sets of mossy fibers}
+
+Granular cells are the most numerous cells in the human brain; 3/4 of
+the neurons in the brain are granular cells in the cerebellum. This
+number suggests that they must embody some sort of combinatorial
+explosion, which is a feature found in both Marr's and Albus's models. 
+
+Each granular cell has synapses with 4-5 mossy fibers, but not all of
+these synapses are necessarily active. We posit that each granular
+cell learns a subset of their inputs that co-occur most frequently,
+and subsequently fire only when all of those inputs are active. We
+will call this subset the active set of the granular cell.
+
+In the case that all the mossy fibers in the active set arise from
+muscle spindles, a given granular cell will encode a particular set of
+muscle lengths, which will in some cases suffice to specify the
+angular location of some joint, or even several joints. In other
+cases, it is still a potentially useful feature to feed to the
+classifier.
+
+We postulate that the granular cell learns the active subset by
+looking for co-occurrences of its inputs. There are two mechanisms
+available to the granular cell: it can strengthen or weaken the mossy
+fiber-granular cell synapse, and it can raise or lower the threshold
+for the granular cell to fire (``intrinsic plasticity''). 
+
+In order to be biologically feasible, the strengthening or weakening
+of the mossy fiber-granular cell synapse should be based solely on
+information that is locally available. Fortunately, these synapses
+live inside of glomeruli which also receive input from Golgi cells, so
+we can use the firing of the Golgi cell when we decide whether to
+strengthen or weaken the synapse.
+
+As we will discuss below, Golgi cells can be fired either by the
+firing of several nearby (and thus likely to be related) mossy fibers,
+or by the firing of some number of nearby granular cells. Of interest
+here is the first mechanism; if we know that several nearby mossy
+fibers have fired, then it is likely that the ``true'' active set is
+firing.  By ``true'' active set, we means the largest set of mossy
+fibers that fire together more than a certain threshold amount of the
+time. If a particular mossy fiber is active at the same time as the
+true active set (as signified by the firing of the Golgi cell), then
+it is probably a member of the active set, so we should strengthen the
+synapse between the mossy fiber and the granular cell. If the mossy
+fiber is not active at the same time, we should weaken the synapse.
+This can be accomplished by using something like the BCM rule, except
+that we should use the firing of the Golgi cell in place of the
+post-synaptic activation.
+
+Let $G^{init}_i(t)$ be the fraction of the time that the $i$-th
+granular cell is firing during a small time window ending at time $t$,
+so that $G^{init}_i(t)=1$ when the $i$-th cell is firing at its
+maximum rate. We can assume that the timings of the individual mossy
+fibers are independent and random, i.e., given the rate at which each
+is firing, and given that the granular cell only fires when all of its
+active inputs fire, we can assume that the rates simply
+multiply:
+$$G^{init}_i(t) = \prod_{j\in \AAA_i} M_j(t),$$
+where $\AAA_i$ is the active set of the $i$-th granular cell.
+
+\subsection{Timed non-maximal suppression from the Golgi cells}
+
+It will commonly be the case that two granular cells have very similar
+input patterns. For instance, two granular cells can be excited by the
+same mossy fiber, or by two different mossy fibers with similar firing
+patterns. In particular, mossy fibers that ultimately encode firings
+of muscle spindles will be highly correlated if they encode similar
+lengths of the same muscle. Since granular cells are triggered by sets
+of mossy fibers, this means that two granular cells could also wind up
+being highly correlated.
+
+It is therefore desirable to perform what is called non-maximal
+suppression. Among a set of granular cells that fire in similar
+situations, we want to select the granular cell that is firing the
+most rapidly, and suppress the firing of all the other similar
+granular cells. A particular granular cell is active only if it is the
+one under its Golgi cell that is firing most rapidly, which indicates
+that the state it codes for is the closest to the truth. 
+
+\subsection{Purkinje cells as difference of post-Golgi granular images}
+
+The Purkinje cells receive input from the granular cells. These
+synapses are in the molecular layer, the outermost layer of the
+cerebellum. Each Purkinje cell receives input from something like
+100,000 granular cells.
+
+Each Purkinje cell receives in addition a single input from a
+``climbing fiber'', which is the output of a neuron in the inferior
+olive. This input is strong enough to trigger the Purkinje cell to
+fire. It has been established that the synapse between the output of
+the granular cell and the input of the Purkinje cell is weakened if
+the granular cell fires at the same time that the climbing fiber
+fires; this is called long-term depression. Our theory is that the
+Purkinje cell firing is meant to suppress some specific output; the
+long-term depression is desirable because it means that we will
+henceforth not take the firing of a particular granular cell as a
+reason to fire the Purkinje cell and suppress an output that we desire
+to see remain unsuppressed.
+
+We should think of each Purkinje cell as receiving a ``picture'' or
+``video'' of what is going on from the granular cells. The Purkinje
+cells are receiving as much information as a 300x300 binary image.
+
+$$P_j(t) = \begin{cases} 1 & \sum_j W^{pp}_{ij}(t) G^{nms}_{i}(t) > \theta_j \\
+0 & \mbox{otherwise} \end{cases},$$
+where
+\begin{itemize}
+\item $G^{nms}_i(t)$ is the output of the $i$-th granular cell at time $t$,
+  after non-maximal suppression has been performed by the Golgi cells.
+\item $W^{pp}_{ij}(t)$ is the weight of the synapse between the $i$-th
+  parallel fiber (output of the $i$-th granular cell) and the $j$-th
+  Purkinje cell.
+\item We can probably get away with $\theta_j=\theta$, for some
+  constant $\theta$.
+\end{itemize}
+
+
+We posit the following learning rule for the synapse weights between
+the parallel fibers (output of the granular cells) and Purkinje cell
+inputs:
+$$W^{pp}_{ij}(t+1) = \begin{cases} 
+W^{pp}_{ij}(t) - c & IO_j(t)=1, G_{i}(t)=1 \\
+W^{pp}_{ij}(t) + d & IO_j(t)=0, G_i(t)=1 \\
+W^{pp}_{ij}(t) & G_i(t)=0 \end{cases}.$$
+
+Given this learning rule, we can see that the synapse weights of a
+single Purkinje cell can be thought of as the sum of all post-Golgi
+granular images from time steps where the climbing fiber did not fire,
+minus the sum of all post-Golgi granular images from time steps where
+the climbing fiber did fire:
+\begin{align*}
+W^{pp}_{ij}(T) &= d\sum_{t=1}^{T-1} \left(1-IO_j(t)\right) G^{nms}_i(t) \\
+& - c \sum_{t=1}^{T-1} IO_j(t) G^{nms}_i(t)
+\end{align*}
+We can think of this in the following way: every time step of training
+is either anti-firing of the Purkinje cell (if the relevant inferior
+olive cell fired at that time step) or pro-firing (if the relevant
+inferior olive cell did not fire). We exclude all time steps when
+$G^{nms}_i(t)$ was zero. We then allow each time step to vote at this
+synapse, weighting the votes against firing with weight $c$ and the
+votes in favor of firing with weight $d$. We perform this computation
+at each synapse to get the synapse weight $W^{pp}_{ij}$, which is then
+used as the weight with which $G^{nms}_i(t)$ is considered. Thus, the
+Purkinje cell takes each $G^{nms}_i(t)$ into account with a weight
+that depends on all previous time steps where that cell was active.
+
+\subsection{Basket and stellate cells as anti-Purkinje cells}
+
+We have a problem here, which is that the synapses between the
+parallel fibers and the Purkinje cells are always excitatory, so we
+can never take a granular cell as evidence that we {\em don't} want to
+fire the relevant Purkinje cell. This problem is solved by the basket
+and stellate cells, which inhibit the Purkinje cells and receive their
+input from the parallel fibers. Whenever we would wind up with a
+negative synapse weight between the $i$-th granular cell and the
+$j$-th Purkinje cell in the above formulas, this should be interpreted
+as a positive weight between the parallel fiber of the $i$-th granular
+cell and a basket or stellate cell that inhibits the $j$-th Purkinje cell.
+
+
+
+\section{Thoughts}
+
+\begin{itemize}
+\item Can think of NMS as a kind of explaining away.
+\item Why are there mossy fiber-Golgi cell synapses?
+\item Purkinje cells have collaterals that suppress nearby Purkinje
+  cells - this is sufficient for symmetry breaking?
+\item Purkinje cells have collaterals that have ``weak inhibitory
+  synapses'' with cortical inhibitory interneurons (B/S cells)
+
+\item There are some connections between collaterals of granular cells
+  and Purkinje cells that take place in the Purkinje layer. These are
+  stronger synapses than those of the parallel fibers. This is the
+  symmetry breaking mechanism.
+
+\item Golgi cells have gap junctions with other Golgi cells, which
+  seem to act to synchronize them.
+
+\item (Prediction already known to be true.)
+The parallel fiber-basket cell synapse should be strengthened by the
+simultaneous firing of the climbing fiber and the parallel fiber, and
+weakened by the firing of the parallel fiber alone.
+
+
+\end{itemize}
+
+
+\end{document}

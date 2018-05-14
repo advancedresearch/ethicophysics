@@ -1,0 +1,32 @@
+\documentclass{article}
+\usepackage{leonine,amsmath,amssymb,amsthm,graphicx}
+%\usepackage{grffile, algorithm, algorithmic}
+% \usepackage{caption, subcaption}
+\newcommand{\marginnote}{\mar}
+\newenvironment{marginfigure}{\begin{figure}}{\end{figure}}
+\setkeys{Gin}{width=\linewidth,totalheight=\textheight,keepaspectratio}
+\graphicspath{{graphics/}}
+% Prints a trailing space in a smart way.
+\usepackage{xspace}
+% Inserts a blank page
+\newcommand{\blankpage}{\newpage\hbox{}\thispagestyle{empty}\newpage}
+% \usepackage{units}
+% Typesets the font size, leading, and measure in the form of 10/12x26 pc.
+\newcommand{\measure}[3]{#1/#2$\times$\unit[#3]{pc}}
+
+\theoremstyle{definition}
+\newtheorem{pred}[thm]{Prediction}
+
+\title{Askesis: Glossary} \author{Eric Purdy}
+
+\begin{document}
+
+\maketitle
+
+\begin{description}
+\item[Nucleus] A group of neurons that have a common structure and are
+  hypothesized to share a common function. In particular, this has
+  nothing to do with the nucleus of a cell.
+\end{description}
+
+\end{document}
