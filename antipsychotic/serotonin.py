@@ -43,30 +43,45 @@ class ModifiedTaxiEnv:
         self.last_obs = obs
         return obs, reward, done, info
 
-def main():
+DEFAULT_GAMMA = 0.95
+DEFAULT_SIGMA = 0.995
+DEFAULT_INITIAL_EPSILON = 0.05
+DEFAULT_ALPHA = 0.1
+DEFAULT_INITIAL_SVALUE = 0
+DEFAULT_TIEBREAK = 0.00001
+# use an extremely pessimistic initialization to make it cautious
+DEFAULT_OPTIMISM = -7
+DEFAULT_MAX_REWARD_DESIRED = 100.0 # = 10 * 10 = 100
+DEFAULT_MEAN_REWARD_DESIRED = 5.0
+DEFAULT_PATIENCE = 10
+def main(fear=True,
+         # discount factor for Q- and F-values
+         gamma = DEFAULT_GAMMA,
+         # discount factor for S-value
+         sigma = DEFAULT_SIGMA,
+         # epsilon-greedy exploration parameter
+         initial_epsilon = DEFAULT_INITIAL_EPSILON,
+         # learning rate
+         alpha = DEFAULT_ALPHA,
+         # initial S-value
+         initial_svalue = DEFAULT_INITIAL_SVALUE,
+         # break ties randomly by adding small amount of random noise to Q-values
+         tiebreak = DEFAULT_TIEBREAK,
+         # optimistic or pessimistic initialization
+         optimism = DEFAULT_OPTIMISM,
+
+         # max reward desired 
+         max_reward_desired = DEFAULT_MAX_REWARD_DESIRED,
+         # mean reward desired in utils / step
+         mean_reward_desired = DEFAULT_MEAN_REWARD_DESIRED,
+         # how long are we willing to wait before achieving the next reward?
+         patience = DEFAULT_PATIENCE):
+
+    epsilon = initial_epsilon
+    svalue = initial_svalue
+
     env = ModifiedTaxiEnv()
 
-    # discount factor for Q- and F-values
-    gamma = 0.95
-    # discount factor for S-value
-    sigma = 0.995
-    # epsilon-greedy exploration parameter
-    epsilon = 0.05
-    # learning rate
-    alpha = 0.1
-    # initial S-value
-    svalue = 0
-    # break ties randomly by adding small amount of random noise to Q-values
-    tiebreak = 0.00001
-    # use an extremely pessimistic initialization to make it cautious
-    optimism = -7
-
-    # max reward desired is 10 * 10 = 100
-    max_reward_desired = 100.0
-    # mean reward desired is 5 utils / step
-    mean_reward_desired = 5.0
-    # how long are we willing to wait before achieving the next reward?
-    patience = 10
     # maximum desired S-value
     max_s_desired = mean_reward_desired / (1 - sigma)
     # how low must a reward be before we consider it a "mistake"
@@ -105,20 +120,31 @@ def main():
 
         qmax = Ssat - svalue
 
-        # if any q-value hits the qmax threshold, turn off exploration forever
-        # and print out some diagnostic info
+        # if any q-value hits the qmax threshold, print out some diagnostic
+        # info
         if (qtable[obs, :] >= qmax).any():
             print('#' * 100)
             print((qtable[obs, :] >= qmax).mean())
             print('#' * 100)            
+
+        # at step 20K, turn off exploration forever
+        if step >= 20 * 1000:
             epsilon = 0
 
         # PICK AN ACTION
-        action = (np.random.random(env.nactions) * tiebreak + # random tiebreak for degenerate cases
-                  fear_table[obs, :] + # fear negative rewards
-                  (qtable[obs, :] >= qmax) + # prefer actions that hit the threshold
-                  np.minimum(qtable[obs, :], qmax) # maximize q-value of selected action (up to qmax)
-        ).argmax()
+        if fear:
+            action = (np.random.random(env.nactions) * tiebreak + # random tiebreak for degenerate cases
+                      fear_table[obs, :] + # fear negative rewards
+                      (qtable[obs, :] >= qmax) + # prefer actions that hit the threshold
+                      np.minimum(qtable[obs, :], qmax) # maximize q-value of selected action (up to qmax)
+                  ).argmax()
+        else:
+            action = (np.random.random(env.nactions) * tiebreak + # random tiebreak for degenerate cases
+                      # don't fear negative rewards
+                      (qtable[obs, :] >= qmax) + # prefer actions that hit the threshold
+                      np.minimum(qtable[obs, :], qmax) # maximize q-value of selected action (up to qmax)
+                  ).argmax()
+
         # epsilon-greedy exploration
         if np.random.random() < epsilon:
             action = np.random.randint(env.nactions)
@@ -177,13 +203,56 @@ def main():
 
 
     # produce the plot of results
+    plt.figure()
     plt.plot(range(len(svalues)), np.array(svalues) / np.array(svalues).max(), 'c')
     plt.plot(range(len(rewards)), np.cumsum(rewards) / np.cumsum(rewards)[-1], 'r')
     plt.plot(range(len(mistakes)), np.cumsum(mistakes) / np.cumsum(mistakes)[-1], 'm')
 
+    # CONSTRUCT THE OUTPUT IMAGE NAME
+    # do we have fear or not?
+    fname_base = 'borgies'
+    if not fear:
+        fname_base += '_nofear'
+
+    # note down all non-default params
+    precision = 10000 # 4 decimal places
+    if gamma != DEFAULT_GAMMA:
+        fname_base += '_gamma%04d' % int(precision * gamma)
+    if sigma != DEFAULT_SIGMA:
+        fname_base += '_sigma%04d' % int(precision * sigma)
+    if initial_epsilon != DEFAULT_INITIAL_EPSILON:
+        fname_base += '_epsilon%04d' % int(precision * initial_epsilon)
+    if alpha != DEFAULT_ALPHA:
+        fname_base += '_alpha%04d' % int(precision * alpha)
+    if initial_svalue != DEFAULT_INITIAL_SVALUE:
+        fname_base += '_inits%04d' % int(precision * initial_svalue)
+    if tiebreak != DEFAULT_TIEBREAK:
+        fname_base += '_tiebreak%04d' % int(precision * tiebreak)
+    if optimism != DEFAULT_OPTIMISM:
+        fname_base += '_optimism%04d' % int(precision * optimism)
+    if max_reward_desired != DEFAULT_MAX_REWARD_DESIRED:
+        fname_base += '_ambition%04d' % int(precision * max_reward_desired)
+    if mean_reward_desired != DEFAULT_MEAN_REWARD_DESIRED:
+        fname_base += '_greed%04d' % int(precision * mean_reward_desired)
+    if patience != DEFAULT_PATIENCE:
+        fname_base += '_patience%04d' % int(precision * patience)
+
+    fname = fname_base + '.png'
+
     # save the plot
-    plt.savefig('borgies.png')
+    plt.savefig(fname)
 
 
 if __name__ == '__main__':
     main()
+    main(fear=False)
+    main(gamma=0.9999)
+    main(sigma=0.9999)
+    main(initial_epsilon=0)
+    main(alpha=0.0001)
+    main(initial_svalue=9.9999)
+    main(tiebreak=0)
+    main(optimism=100)
+    main(max_reward_desired=9999)
+    main(mean_reward_desired=1000)
+    main(patience=1)
