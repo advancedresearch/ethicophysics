@@ -10,17 +10,30 @@
 \maketitle
 
 \begin{abstract}
+What are Good and Evil? How do we explain these concepts to a computer
+sufficiently well that we can be assured that the computer will
+understand them in the same sense as humans understand them? These are
+hard questions, and people have often despaired of finding any answers
+to the AI safety problem.
+
+In this paper, we lay out a theory of ethics modeled on the laws of
+physics. The theory has two key advantages: it squares nicely with
+most human moral intuitions, and it is amenable to rather
+straightforward computations that a computer could easily perform if
+told to. It therefore forms an ideal foundation for solving the AI
+safety problem.
 \end{abstract}
 
 \section{Introduction}
 
-In this document, we lay out the beginnings of a new theory of human
-nature that we term {\em ethicophysics}. This is intended to be a
-complete and scientifically accurate account of the nature of Good and
-Evil, and other such ethical riddles that have haunted humanity since
-the beginning of our species. We term it ethicophysics to suggest that
-there are certain natural laws in the ethical sphere that cannot be
-violated any more than the laws of physics can be violated.
+In this document, we lay out the beginnings of a new theory of ethics
+and human nature that we term {\em ethicophysics}. This is intended to
+be a complete and scientifically accurate account of the nature of
+Good and Evil, and other such ethical riddles that have haunted
+humanity since the beginning of our species. We term it ethicophysics
+to suggest that there are certain natural laws in the ethical sphere
+that cannot be violated any more than the laws of physics can be
+violated.
 
 Since such a project is ambitious to the point of madness, we ask the
 reader's indulgence in following along with what must seem a quixotic
@@ -31,11 +44,11 @@ universe says they must, but because we choose to use them in a
 certain way and not in other ways.
 
 We consider an {\em actor network}, which is a set of actors who act
-in the same physical space and communicate with one another. The
-actors are presumed to be {\em non-physical}, i.e., they are powered
-by computational devices which are not modeled by the laws of physics
-used to reason about the rest of reality. This is obviously a weird
-assumption - all really existing computational devices (brains,
+in the same physical space and communicate with one another. The minds
+of the actors are presumed to be {\em non-physical}, i.e., they are
+powered by computational devices which are not modeled by the laws of
+physics used to reason about the rest of reality. This is obviously a
+weird assumption - all really existing computational devices (brains,
 computers, abacuses, etc.) are physical and obey the physical laws of
 reality. The goal here is to separate reality out into the {\em naive}
 physical reality modeled by traditional physics and the {\em ethical}
@@ -60,7 +73,7 @@ We use the term ``God'' to refer to a potential omniscient observer of
 the universe. We make no claims as to the ontological status of such a
 being. Note, in particular, that we do not assume that God is
 omnipotent or omnibenevolent, which allows us to avoid the classic
-Epicurean trilemma:
+Epicurean trilemma \cite{trilemma}:
 
 \begin{quote}
   God, he says, either wishes to take away evils, and is unable; or He
@@ -71,14 +84,31 @@ Epicurean trilemma:
   with God; if He is neither willing nor able, He is both envious and
   feeble, and therefore not God; if He is both willing and able, which
   alone is suitable to God, from what source then are evils? Or why
-  does He not remove them?\cite{trilemma}
+  does He not remove them?
 \end{quote}
 
 We note, however, that the content of the ethicophysics suggests that
 such an entity, if it did exist, would be reasonably omnibenevolent,
 and as omnipotent as is consistent with the existence of free will.
 As noted by Dr. Martin Luther King Jr. \cite{king1963tough}, a God that
-did not allow for free will would simply be a tyrant.
+did not allow for free will would simply be a tyrant:
+\begin{quote}
+  I am thankful that we worship a God who is both tough minded and
+  tenderhearted. If God were only tough minded, he would be a cold,
+  passionless despot sitting in some far-off heaven ``contemplating
+  all,'' as Tennyson puts it in ``The Palace of Art.'' He would be
+  Aristotle's ``unmoved mover,'' self-knowing but not other-loving.
+  But if God were only tenderhearted, he would be too soft and
+  sentimental to function when things go wrong and incapable of
+  controlling what he has made. He would be like H.G. Wells's loveable
+  God in {\em God, the Invisible King}, who is strongly desirous of
+  making a good world but finds himself helpless before the surging
+  powers of evil. God is neither hardhearted nor soft minded. He is
+  tough minded enough to transcend the world; he is tenderhearted
+  enough to live in it. He does not leave us alone in our agonies and
+  struggles. He seeks us in dark places and suffers with us and for us
+  in our tragic prodigality.
+\end{quote}
 
 \subsection{Defining the Soul}
 
@@ -131,7 +161,7 @@ standard English senses. (It is presumed that they can be measured
 precisely in some way via e.g. advanced neuroscientific theories that
 we do not presume to know. The important point here is just that there
 will come to exist some rigorous technical definition of the
-quantities such that their epistemological fstatus is not in
+quantities such that their epistemological status is not in
 question.) An actor $a$ in the actor network can experience love or
 hate for any subset $B$ of the actor network. (In particular, the
 actor can love and/or hate itself.) Love and hate are presumed to be
@@ -170,9 +200,9 @@ or ever will exist. For instance, we could define the love and hate
 values of a non-alive person to be the average love and hate they
 experienced or will experience over the course of their lives.
 
-\subsection{Actions Have Consequences} 
+\subsection{The Golden Theorem: Actions Have Consequences} 
 
-\begin{thm}
+\begin{thm}[The Golden Theorem]
   Actions have consequences. In particular, the consequence of
   committing an evil act that goes undetected is that one becomes the
   person that one becomes after such an act, and has as a consequence
@@ -286,14 +316,15 @@ CECM_\varphi &= \frac{\partial (\SSS - \SSS_\varphi)}{\partial \dot{s}} s. \\
 &\qquad + h(\mathrm{God}, \pi_\varphi(a)) \\
   \end{align*}
 
-This yields what is essentially a proof of Newton's third law, but in
-the ethical domain: every action has an equal and opposite
-reaction. In more poetic terms, this is a proof that God thinks
-``whatsoever you do to the least of my brethren, that you do unto
-me''. God's opinion of the perpetrator of an unconscionable act with a
-victim changes by an amount equal to and opposite to the change in his
-opinion of the victim of the same act. (Take $\pi_\varphi$ to be the
-permutation that switches the roles of perpetrator and victim.)
+This yields what is essentially a proof of Newton's third law (every
+action has an equal and opposite reaction), but in the ethical domain:
+every action has an equal and opposite {\em ethical} reaction. In more
+poetic terms, this is a proof that God thinks ``whatsoever you do to
+the least of my brethren, that you do unto me''. God's opinion of the
+perpetrator of an unconscionable act with a victim changes by an
+amount equal to and opposite to the change in his opinion of the
+victim of the same act. (Take $\pi_\varphi$ to be the permutation that
+switches the roles of perpetrator and victim.)
   
 This same principle can be applied to any binary decision. The total
 coherent extrapolated conscience momentum will be the same in either
@@ -308,6 +339,87 @@ consequences are not permanent; one can be forgiven sins, but in
 general only when one has overcome the sin and made recompense.
   
 \end{proof}
+
+\subsection{Playing Favorites: Weighted Opinionatedness}
+
+Let $w_a$ be the weight of $a$ according to some external observer. It
+is presumed that God does not apply non-even weighting (because of the
+equality of souls), but there is nothing stopping the rest of us from
+having favorites.
+
+We define the quantity {\em weighted active opinionatedness of $a$},
+which is the sum of the squared love and hate values of $a$ for all
+subsets of the network, weighted by the weight of $a$:
+$$op_w(a) = \frac{1}{2} w_a \sum_B l(a, B)^2 + h(a, B)^2.$$ 
+
+As the name suggests, weighting plays a similar role in the
+ethicophysics as mass plays in traditional physics. More specifically,
+we can defined a weighted coherent extrapolated conscience, which is
+sort of the fully considered opinion of the smartest possible version
+of whatever entity chose the weighting function. The Golden Theorem
+can then be extended to show that Newton's third law holds, not only
+for God's opinion, but for the opinion of any omniscient observer.
+
+\section{Discussion}
+
+\subsection{Theodicy}
+
+We wish to point out a potential misreading of the theorems in this
+paper, which is that God will help people who are virtuous in some
+straightforward way. This is simply untrue, and potentially dangerous
+for anyone to believe. Consider, e.g., the following piece of vileness
+due to Hitler \cite{hitler}:
+\begin{quote}
+I did not want this struggle. Since January, 1933, when Providence
+entrusted me with the leadership of the German Reich, I had an aim
+before my eyes which was essentially incorporated in the program of
+our National Socialist party. I have never been disloyal to this aim
+and have never abandoned my program... Only when the entire German
+people become a single community of sacrifice can we expect and hope
+that Almighty God will help us. The Almighty has never helped a lazy
+man. He does not help the coward. He does not help a people that
+cannot help itself. The principle applies here, help yourselves and
+Almighty God will not deny you his assistance.
+\end{quote}
+
+This was a vile lie told by a vile man for vile purposes. In reality,
+bad things can and do happen to good people, and God will do nothing
+to stop them. Or rather, he will whisper the truth in our minds, and
+we all of us will do whatever it is that we will do, and that is the
+only aid that God ever has or ever will provide. Bad things happen to
+good people because other good people are not able to stop them from
+happening, and because bad people ignore the whispers of their broken
+consciences.
+
+\section{Epilogue}
+
+We find that the following lyrics of Yusuf Islam \cite{iwish} capture
+the sort of spirit of what we are trying to accomplish in this paper:
+\begin{quote}
+  I wish I knew, I wish I knew\\
+  What makes me, me, and what makes you, you\\
+  It's just another point of view, ooo\\
+  A state of mind I'm going through, yes\\
+  So what I see is never true, ahhh\\
+\\
+  I wish I could tell, I wish I could tell\\
+  What makes a heaven what makes a hell\\
+  And do I get to ring my bell, ooo\\
+  Or land up in some dusty cell, no\\
+  While others reach the big hotel, yeah\\
+\\
+  I wish I had, I wish I had\\
+  The secret of good, and the secret of bad\\
+  Why does this question drive me mad? ahhh\\
+  'Cause I was taught when but a lad, yes\\
+  That bad was good and good was bad, ahhh\\
+\\
+  I wish I knew the mystery of\\
+  That thing called hate, and that thing called love\\
+  What makes the in-between so rough? ahhh\\
+  Why is it always push and shove? ahhh\\
+  I guess I just don't know enough, yes\\
+\end{quote}
 
 \bibliography{ethicophysics} 
 \bibliographystyle{acm}
