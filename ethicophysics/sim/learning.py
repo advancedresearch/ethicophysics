@@ -69,7 +69,7 @@ def build_computation(
         # shape=(num_actors, num_preachers),
         initializer=initial_faiths,
     )
-    old_unskilled_skilled = old_affiliations[:, 2]
+    old_unskilled_skilled = old_affiliations[:, 0]
     # sermon effects are assumed to be saturating, and otherwise
     # a simple product of the skill and affiliation of the preacher
     sermon = tf.tanh(
