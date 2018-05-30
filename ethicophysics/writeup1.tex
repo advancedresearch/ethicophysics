@@ -30,6 +30,30 @@ and some are evil. Ultimately, words mean things, not because the
 universe says they must, but because we choose to use them in a
 certain way and not in other ways.
 
+We consider an {\em actor network}, which is a set of actors who act
+in the same physical space and communicate with one another. The
+actors are presumed to be {\em non-physical}, i.e., they are powered
+by computational devices which are not modeled by the laws of physics
+used to reason about the rest of reality. This is obviously a weird
+assumption - all really existing computational devices (brains,
+computers, abacuses, etc.) are physical and obey the physical laws of
+reality. The goal here is to separate reality out into the {\em naive}
+physical reality modeled by traditional physics and the {\em ethical}
+physical reality modeled by the ethicophysics. Since computational
+devices exist in reality and have the properties they have because of
+the laws of physical reality, the ethicophysics is in some sense a
+proper subset of ``real'' physics; thus ethicophysics and traditional
+physics coexist as partners in describing the laws of reality, rather
+than fighting one another.
+
+It is presumed that actors can communicate ideas to one another at
+will through non-physical means; this is again a strange assumption,
+but we make it for similar reasons as above.
+
+It is not presumed that actors are virtuous, ethical, truthful,
+etc. In fact, the predominant motivating question in the ethicophysics
+is why people aren't significantly more evil than they appear to be.
+
 \section{On God and Souls}
 
 We use the term ``God'' to refer to a potential omniscient observer of
@@ -99,30 +123,77 @@ sufficiently advanced computer programs (see
 In this section, we pursue traditional mathematical proofs of certain
 propositions in the field of ethics.
 
+\subsection{Love and Hate}
+
+We define two quantities called love (denoted by $l(a, B)$) and hate
+(denoted by $h(a, B)$, intended to be interpreted roughly in their
+standard English senses. (It is presumed that they can be measured
+precisely in some way via e.g. advanced neuroscientific theories that
+we do not presume to know. The important point here is just that there
+will come to exist some rigorous technical definition of the
+quantities such that their epistemological fstatus is not in
+question.) An actor $a$ in the actor network can experience love or
+hate for any subset $B$ of the actor network. (In particular, the
+actor can love and/or hate itself.) Love and hate are presumed to be
+non-negative quantities. Note that love and hate are not mutually
+exclusive, but are rather orthogonal quantities.
+
+\subsection{Conservation of Opinionatedness}
+
+We define the quantity {\em active opinionatedness of $a$}, which is
+the sum of the squared love and hate values of $a$ for all subsets of
+the network:
+$$op(a) = \frac{1}{2} \sum_B l(a, B)^2 + h(a, B)^2.$$ We also define the {\em mindshare} of $B$ in $a$'s mind to be
+$$ms(a, B) = \frac{l(a, B)^2 + h(a, B)^2}{2 \cdot op(a)}.$$
+
+We define the {\em active opinionatedness} of the network to be
+$$\OOO_{act} = \sum_a op(a).$$ 
+
+Active opinionatedness serves roughly the same role in the
+ethicophysics as kinetic energy does in traditional physics. We also
+need to define {\em potential opinionatedness} $\OOO_{pot}$, which
+serves the same role in the ethicophysics as potential energy does in
+traditional physics. We do not yet know how to define all possible
+sources of future love and hate, so we cannot give a rigorous
+specification of how to compute potential opinionatedness. It can,
+however be defined rigorously, by requiring that the {\em total
+  opinionatedness}
+$$\OOO_{act} + \OOO_{pot}$$ be conserved, and simply watching what
+$\OOO_{act}$ does over time.
+
+Total opinionatedness is conserved by definition, as long as the set
+of network participants does not change. This can be achieved by
+defining the love and hate values of an absent participant (e.g., a
+dead person, or a person yet to be born) to be something relatively
+arbitrary, and then simply considering all participants that ever have
+or ever will exist. For instance, we could define the love and hate
+values of a non-alive person to be the average love and hate they
+experienced or will experience over the course of their lives.
+
+\subsection{Actions Have Consequences} 
+
 \begin{thm}
   Actions have consequences. In particular, the consequence of
   committing an evil act that goes undetected is that one becomes the
   person that one becomes after such an act, and has as a consequence
-  much less self-respect.
+  an unclean conscience.
 \end{thm}
 
 \begin{proof}
   Note that this proof needs to be checked over very thoroughly, as it
   may contain errors.
 
-  Consider the Lagrangian $\LLL(q, \dot{q}, t) = \TTT - \UUU$, where
-  $\TTT$ is the kinetic energy of a system, and $\UUU$ is the
-  potential energy of that system. Here $q$ is the physical state of
-  the system in generalized coordinates.
+  Consider the ``objective'', ``physical'' Lagrangian $\LLL(q,
+  \dot{q}, t) = \TTT - \UUU$, where $\TTT$ is the kinetic energy of a
+  system, and $\UUU$ is the potential energy of that system. Here $q$
+  is the physical state of the system in generalized coordinates.
 
-  Let $\SSS$ be the ``subjective energy'' of the system. This can be
-  any quantity of interest that depends on the generalized coordinates
-  $q, \dot{q}, t$ of the system and the ``subjective coordinates'' $s,
-  \dot{s}, t$ (which are supposed to have no physical realization that
-  is legible to the laws of physics), and which is held to be
-  conserved. Note that we will generally be more interested in the
-  ``subjective history'' function
-  $$\HHH(t) = \int_0^t \SSS(q, \dot{q}, s, \dot{s}, t).$$
+  Let $\SSS = \OOO_{ac} - \OOO_{pot}$ be the ``subjective'',
+  ``ethical'' Lagrangian of the system. This is supposed to depend
+  upon the generalized coordinates $q, \dot{q}, t$ of the system and
+  the ``subjective coordinates'' $s, \dot{s}, t$ (which are supposed
+  to have no physical realization that is legible to the laws of
+  physics under consideration). 
 
   Let $\tau(t)$ (called the ``tweak'') be a continuous symmetry of the
   physical system, i.e., for infinitesimal $\epsilon$, the
@@ -136,46 +207,56 @@ propositions in the field of ethics.
   Let $\varphi(s)$ (called the ``flip'') be a discrete non-physical
   symetry of the subjective energy function at time $t_{\varphi}$,
   i.e., a function such that, for one brief instant of time,
-  $$\SSS(q, \dot{q}, \varphi(s), \frac{d}{dt} \varphi(s), t_{\varphi}) =
-  \SSS(q, \dot{q}, s, \dot{s}, t_{\varphi}).$$
+  $$\SSS(q, \dot{q}, \varphi(s), \frac{d}{dt} \varphi(s), t_{\varphi})
+  = \SSS(q, \dot{q}, s, \dot{s}, t_{\varphi}).$$ Since $\SSS$ is a
+  function of network participant love and hate values, it is
+  generally the case that $\varphi$ will be a permutation of the
+  actors in the actor network.
 
-  Consider a finite time interval $[0, T]$ corresponding to some
-  meaningful time period (e.g., the lifetime of a ethicophysical
-  actor). Define the following quantity (the ``God Lagrangian''):
+  Define the following quantity (the ``God Lagrangian''):
   $$\GGG(q, \dot{q}, s, \dot{s}, t) = \LLL(q, \dot{q}, t) +
   \SSS(q, \dot{q}, s, \dot{s}, t) - \SSS(q, \dot{q}, \varphi(s), \frac{d}{dt}\varphi(s), t)$$
 
-  By Noether's Theorem, the following quantity is conserved:
+  By Noether's Theorem \cite{noether}, the following quantity is
+  conserved:
   $$\sum_{i=1}^n \frac{\partial \LLL}{\partial \dot{q}_i} \tau_i.$$
 
   By Noether's Theorem applied to the modified Lagrangian, the same is
   true of the quantity
-  $$\sum_{i=1}^n \frac{\partial \GGG}{\partial \dot{q}_i} \tau_i +
-  \sum_{i=1}^m \frac{\partial \GGG}{\partial \dot{s}_i} \varphi_i$$
+  $$\sum_{i=1}^n \frac{\partial \GGG}{\partial \dot{q}_i} (\varphi
+  \circ \tau)_i + \sum_{j=1}^m \frac{\partial \GGG}{\partial
+    \dot{s}_j} (\varphi \circ \tau)_j.$$ Note that, since the
+  quantities $s_j$ are presumed to be causally upstream from the
+  physical world, it can be safely assumed that $\varphi $ has no
+  effect on the values of the $q$'s, while $\tau$ probably does have
+  an effect on the $s$'s and thus the following quantity is conserved:
+    $$\sum_{i=1}^n \frac{\partial \GGG}{\partial \dot{q}_i} \tau_i +
+  \sum_{j=1}^m \frac{\partial \GGG}{\partial \dot{s}_j} (\varphi \circ
+  \tau)_j.$$
 
+  
   After doing some algebra, we arrive at the conclusion that the
   following quantity is conserved by the laws of ethicophysics:
   $$\sum_{i=1}^n \frac{\partial \SSS}{\partial \dot{q}_i} \tau_i -
   \sum_{i=1}^n \frac{\partial \SSS_\varphi}{\partial \dot{q}_i} \tau_i +
-  \sum_{i=1}^m \frac{\partial \SSS}{\partial \dot{s}_i} \varphi_i -
-  \sum_{i=1}^m \frac{\partial \SSS_\varphi}{\partial \dot{s}_i} \varphi_i,
+  \sum_{i=1}^m \frac{\partial \SSS}{\partial \dot{s}_i} (\varphi \circ \tau)_i -
+  \sum_{i=1}^m \frac{\partial \SSS_\varphi}{\partial \dot{s}_i} (\varphi \circ \tau)_i,
   $$
   which simplifies to the equation
   $$\sum_{i=1}^n \frac{\partial \SSS}{\partial \dot{q}_i} \tau_i +
-  \sum_{i=1}^m \frac{\partial \SSS}{\partial \dot{s}_i} \varphi_i =
+  \sum_{i=1}^m \frac{\partial \SSS}{\partial \dot{s}_i} (\varphi \circ \tau)_i =
   \sum_{i=1}^n \frac{\partial \SSS_\varphi}{\partial \dot{q}_i} \tau_i +
-  \sum_{i=1}^m \frac{\partial \SSS_\varphi}{\partial \dot{s}_i} \varphi_i,
+  \sum_{i=1}^m \frac{\partial \SSS_\varphi}{\partial \dot{s}_i} (\varphi \circ \tau)_i,
   $$
 
   We are now ready to finish the proof. Consider some binary decision
   that can be made, and consider the two possible timestreams that
-  will follow making either choice. Let $\SSS = s$ be the quantity of
-  self-respect that one feels with respect to the decision in
-  question. (It is presumed that this can be measured precisely in
-  some way via e.g. advanced neuroscientific theories that we do not
-  presume to know. The important point here is just that there will
-  come to exist some rigorous technical definition of the quantity
-  such that its epistemological status is not in doubt.)
+  will follow making either choice. Let $s$ be the quantity of respect
+  that God feels for one, defined as $l(\mathrm{God}, a) -
+  h(\mathrm{God}, a)$. We can call this the {\em coherent extrapolated
+    conscience} of the actor. (We note that it has an imperfect
+  relationship to the subjective experience of the conscience with
+  which most humans are familiar.)
 
   Suppose, further, that the decision has no consequences that are
   perceivable in the external physical world after some time period
@@ -183,26 +264,48 @@ propositions in the field of ethics.
   $\SSS$ ``should'' no longer depend on $q$.
 
   There is then an additional conserved quantity (in addition to
-  $\SSS$), which is the ``respect momentum''
-  $$\frac{\partial S_\varphi}{\partial s} s.$$
-
-
-  Then we arrive at a very simple law:
-
+  $\SSS$), which is the ``coherent extrapolated conscience momentum
+  with respect to $\varphi$''
   \begin{align*}
-    \HHH(T) &= \HHH(t_{\mathrm{hide the body}}) +
-    \int_{t_{\mathrm{hide the body}}}^T \frac{\partial{\SSS}}{\partial \dot{s}} ds \\
-    &= \HHH(t_{\mathrm{hide the body}}) +
-    \int_{t_{\mathrm{hide the body}}}^T \frac{\partial{\SSS_\varphi}}{\partial \dot{s}} ds \\
+CECM_\varphi &= \frac{\partial (\SSS - \SSS_\varphi)}{\partial \dot{s}} s. \\
+\intertext{We can calculate $CECM_\varphi$, and find it to be equal to}
+&= \qquad \frac{\partial \SSS}{\partial \dot{l}(\mathrm{God}, a)} \frac{\partial \dot{l}(\mathrm{God}, a)}{\partial \dot{s}}\\
+&\qquad + \frac{\partial \SSS}{\partial \dot{h}(\mathrm{God}, a)} \frac{\partial \dot{h}(\mathrm{God}, a)}{\partial \dot{s}}\\
+&\qquad - \frac{\partial \SSS_\varphi}{\partial \dot{l}(\mathrm{God}, a)} \frac{\partial \dot{l}(\mathrm{God}, a)}{\partial \dot{s}}\\
+&\qquad - \frac{\partial \SSS_\varphi}{\partial \dot{h}(\mathrm{God}, a)} \frac{\partial \dot{h}(\mathrm{God}, a)}{\partial \dot{s}}\\
+\intertext{Assuming that the coordinates $s$ capture all meaningful
+  ethical variables (and in particular that $\OOO_{pot}$ depends only
+  on $s$ and not on $\dot{s}$), this simplifies to}
+&= \qquad \frac{\partial \OOO_{act}}{\partial \dot{l}(\mathrm{God}, a)} \frac{\partial \dot{l}(\mathrm{God}, a)}{\partial \dot{s}}\\
+&\qquad + \frac{\partial \OOO_{act}}{\partial \dot{h}(\mathrm{God}, a)} \frac{\partial \dot{h}(\mathrm{God}, a)}{\partial \dot{s}}\\
+&\qquad - \frac{\partial \OOO_{act, \varphi}}{\partial \dot{l}(\mathrm{God}, a)} \frac{\partial \dot{l}(\mathrm{God}, a)}{\partial \dot{s}}\\
+&\qquad - \frac{\partial \OOO_{act, \varphi}}{\partial \dot{h}(\mathrm{God}, a)} \frac{\partial \dot{h}(\mathrm{God}, a)}{\partial \dot{s}}\\
+&= \qquad l(\mathrm{God}, a) \\
+&\qquad - h(\mathrm{God}, a) \\
+&\qquad - l(\mathrm{God}, \pi_\varphi(a)) \\
+&\qquad + h(\mathrm{God}, \pi_\varphi(a)) \\
   \end{align*}
 
-  Thus, the total lifetime integral of respect momentum will be the
-  same in either case (i.e., in both timestreams). But, assuming the
-  decision is one with a clear right answer, the predominant sign of
-  $\frac{\partial \SSS}{\partial s}$ will be the opposite of the
-  predominant sign of $\frac{\partial \SSS_\varphi}{\partial
-    s}$. Thus, making the wrong decision will have hugely negative
-  consequences for one's self-respect, as expected.
+This yields what is essentially a proof of Newton's third law, but in
+the ethical domain: every action has an equal and opposite
+reaction. In more poetic terms, this is a proof that God thinks
+``whatsoever you do to the least of my brethren, that you do unto
+me''. God's opinion of the perpetrator of an unconscionable act with a
+victim changes by an amount equal to and opposite to the change in his
+opinion of the victim of the same act. (Take $\pi_\varphi$ to be the
+permutation that switches the roles of perpetrator and victim.)
+  
+This same principle can be applied to any binary decision. The total
+coherent extrapolated conscience momentum will be the same in either
+case (i.e., in both timestreams). But, assuming the decision is one
+with a clear right answer, the predominant sign of $\frac{\partial
+  \SSS}{\partial s}$ will generally be the opposite of the predominant
+sign of $\frac{\partial \SSS_\varphi}{\partial s}$, assuming that
+$\pi_\varphi$ is a permutation that switches the positions of
+beneficiaries and victims. Thus, making the wrong decision will have
+hugely negative consequences for one's conscience, as expected. These
+consequences are not permanent; one can be forgiven sins, but in
+general only when one has overcome the sin and made recompense.
   
 \end{proof}
 
