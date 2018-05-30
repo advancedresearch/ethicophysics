@@ -1,0 +1,188 @@
+\ProvidesPackage{leonine}
+\usepackage{amsmath,amssymb,amsthm,graphicx}%%xy, setspace, amscd (commutative diagram)
+
+%MACROS:
+%Theorems
+%No indent
+%Common abbreviations (math)
+%Quick begin and end for matrices, equations, questions
+%Loglike operators
+%Complexity classes
+%\AA -> blackboard bold
+%\AAA -> calligraphic script
+%arrows
+%Bold commands for pseudocode
+%Marginpar
+
+\newcommand\ema[1]{\ensuremath{#1}}
+
+%BOX
+\newcommand\mybox[1]{\noi\framebox{
+\begin{minipage}{\linewidth}
+#1
+\end{minipage}}}
+
+%Theorems
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{alg}[thm]{Algorithm}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{code}[thm]{Pseudocode}
+\newtheorem{conj}[thm]{Conjecture}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{notat}[thm]{Notation}
+\newtheorem{prob}[thm]{Problem}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rmk}[thm]{Remark}
+\newtheorem{obs}[thm]{Observation}
+\newtheorem{fact}[thm]{Fact}
+\newtheorem{claim}[thm]{Claim}
+\newtheorem{protocol}[thm]{Protocol}
+\newtheorem{itm}[thm]{Item}
+\newtheorem{ex}[thm]{Example}
+\newtheorem{proc}[thm]{Process}
+\newtheorem{q}[thm]{Question}
+
+\newcommand{\hr}{\rule{\linewidth}{0.5mm}\\}
+\newenvironment{qenv}
+{\noi\hr\begin{q}\.\\}
+{\end{q}\noi\hr}
+
+%No indent
+\def\noi{\noindent}
+
+%Common Abbreviations
+\def\and{\wedge}
+\newcommand{\ola}[1]{\overleftarrow{#1}}
+\newcommand{\ora}[1]{\overrightarrow{#1}}
+\def\inv{^{-1}}
+\def\zo{\ema{\{0,1\}}}
+\def\sm{\setminus}
+\def\half{\frac{1}{2}}
+\def\ow{\text{otherwise}}
+\def\Rn{\mathbb{R}^n}
+
+%quick begin and end for matrices,equations,questions
+\def\mat{\left(\begin{array}}
+\def\tam{\end{array}\right)}
+\def\beq{\begin{equation}}
+\def\eeq{\end{equation}}
+\def\bq{\begin{qenv}}
+\def\eq{\end{qenv}}
+\newcommand\bal{\begin{align*}}
+\newcommand\eal{\end{align*}}
+\def\bitem{\begin{itemize}}
+\def\eitem{\end{itemize}}
+\def\benum{\begin{enumerate}}
+\def\eenum{\end{enumerate}}
+\def\bdesc{\begin{description}}
+\def\edesc{\end{description}}
+
+%\exp[*]
+\newcommand\exx[1]{\ensuremath{\exp\left[#1\right]}}
+
+%Loglike operators
+\def\argmin{\operatorname{argmin}}
+\DeclareMathOperator*{\argmax}{argmax}
+\DeclareMathOperator*{\poly}{poly}
+\DeclareMathOperator*{\rev}{rev}
+
+%Complexity classes
+\def\P{{\sf P}}
+\def\NP{{\sf NP}}
+\def\WP{{\sf W[P]}}
+
+%\AA should be blackboard-bold for any letter A
+\def\AA{\mathbb{A}}
+\def\BB{\mathbb{B}}
+\def\CC{\mathbb{C}}
+\def\DD{\mathbb{D}}
+\def\EE{\mathbb{E}}
+\def\FF{\mathbb{F}}
+\def\GG{\mathbb{G}}
+\def\HH{\mathbb{H}}
+\def\II{\mathbb{I}}
+\def\JJ{\mathbb{J}}
+\def\KK{\mathbb{K}}
+\def\LL{\mathbb{L}}
+\def\MM{\mathbb{M}}
+\def\NN{\mathbb{N}}
+\def\PP{\mathbb{P}}
+\def\QQ{\mathbb{Q}}
+\def\RR{\mathbb{R}}
+\def\SS{\mathbb{S}}
+\def\TT{\mathbb{T}}
+\def\UU{{\mathbb U}}
+\def\VV{{\mathbb V}}
+\def\WW{{\mathbb W}}
+\def\XX{{\mathbb X}}
+\def\YY{{\mathbb Y}}
+\def\ZZ{{\mathbb Z}}
+
+%\aa should be bold for any letter a
+\def\ff{{\mathbf f}}
+\def\xx{{\mathbf x}}
+\def\zz{{\mathbf z}}
+
+%\aalpha should be bold for any Greek alpha
+\def\eepsilon{\mbox{\boldmath$\epsilon$}}
+\def\pphi{\mbox{\boldmath$\phi$}}
+\def\mmu{\mbox{\boldmath$\mu$}}
+
+%\AAA should be mathcal for any letter A
+\def\AAA{{\mathcal A}}
+\def\BBB{{\mathcal B}}
+\def\CCC{{\mathcal C}}
+\def\DDD{{\mathcal D}}
+\def\EEE{{\mathcal E}}
+\def\FFF{{\mathcal F}}
+\def\GGG{\ema{{\mathcal G}}}
+\def\HHH{{\mathcal H}}
+\def\III{{\mathcal I}}
+\def\JJJ{{\mathcal J}}
+\def\KKK{{\mathcal K}}
+\def\LLL{{\mathcal L}}
+\def\MMM{{\mathcal M}}
+\def\NNN{{\mathcal N}}
+\def\OOO{{\mathcal O}}
+\def\PPP{{\mathcal P}}
+\def\QQQ{{\mathcal Q}}
+\def\RRR{{\mathcal R}}
+\def\SSS{{\mathcal S}}
+\def\TTT{{\mathcal T}}
+\def\UUU{{\mathcal U}}
+\def\VVV{{\mathcal V}}
+\def\WWW{{\mathcal W}}
+\def\XXX{{\mathcal X}}
+\def\YYY{{\mathcal Y}}
+\def\ZZZ{{\mathcal Z}}
+
+%arrows
+\def\from{\leftarrow}
+\def\lr{\leftrightarrow}
+\def\into{\hookrightarrow}
+\def\otni{\hookleftarrow}
+\def\onto{\twoheadrightarrow}
+\def\otno{\twoheadleftarrow}
+
+%Bold commands for pseudocode
+\def\bfor{{\bf for}}
+\def\bwhile{{\bf while}}
+\def\bdo{{\bf do}}
+\def\bend{{\bf end}}
+\def\bif{{\bf if}}
+\def\bthen{{\bf then}}
+\def\belse{{\bf else}}
+\def\belseif{{\bf elseif}}
+\def\breturn{{\bf return}}
+\def\bprocedure{{\bf procedure}}
+
+%Marginpar
+\setlength{\marginparwidth}{1.2in}
+\let\oldmarginpar\marginpar
+\renewcommand\marginpar[1]{\-\oldmarginpar[\raggedleft\footnotesize #1 ]%
+{\raggedright\footnotesize #1}}
+\newcommand\mar[1]{\marginpar{\begin{singlespace} #1 \end{singlespace}}}
