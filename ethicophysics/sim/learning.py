@@ -36,6 +36,12 @@ def build_computation(
         tf.float32,
         name='alive',
         shape=num_actors)
+    old_affiliations = tf.placeholder(
+        tf.float32,
+        name='old_affiliations',
+        shape=(num_actors, num_soul_axes),
+    )
+    old_unskilled_skilled = old_affiliations[:, 0]
 
     beliefs = tf.get_variable(
         'beliefs',
@@ -59,17 +65,11 @@ def build_computation(
         keepdims=True,
     )
     
-    old_affiliations = tf.placeholder(
-        tf.float32,
-        name='old_affiliations',
-        shape=(num_actors, num_soul_axes),
-    )
     faith = tf.get_variable(
         'faith',
         # shape=(num_actors, num_preachers),
         initializer=initial_faiths,
     )
-    old_unskilled_skilled = old_affiliations[:, 0]
     # sermon effects are assumed to be saturating, and otherwise
     # a simple product of the skill and affiliation of the preacher
     sermon = tf.tanh(
@@ -108,13 +108,14 @@ def build_computation(
         alpha_truth * twinges +
         # changes in affiliation should accord with religious beliefs
         alpha_religion * sermon_effects +
-        # # changes in affiliation should accord with movedness
+        # changes in affiliation should accord with movedness
         alpha_art * movedness
     )        
 
+    # people don't like changing their minds
     loss = tf.nn.l2_loss(new_affiliations - old_affiliations)
 
-    optimizer = tf.train.AdamOptimizer().minimize(loss)
+    optimizer = tf.train.AdamOptimizer(1.0).minimize(loss)
     
     return dict(
         input=dict(
@@ -124,22 +125,26 @@ def build_computation(
             implications=implications,
         ),
         output=dict(
-            # life
+            # life and affiliations
             alive=alive,
+            old_affiliations=old_affiliations,
+            new_affiliations=new_affiliations,
 
             # truth
             beliefs=beliefs,
             evidence=evidence,
             implications=implications,
-            
+            twinges=twinges,
+
             # beauty
             aesthetics=aesthetics,
             beauty=beauty,
-            
+            movedness=movedness,
+
             # goodness
-            old_affiliations=old_affiliations,
-            new_affiliations=new_affiliations,
             faith=faith,
+            sermon=sermon,
+            sermon_effects=sermon_effects,
             
             # learning
             loss=loss,
