@@ -1,5 +1,5 @@
 \documentclass{article}
-\usepackage{amsmath, amssymb, amsthm, leonine}
+\usepackage{amsmath, amssymb, amsthm, leonine, array}
 
 \title{Ethicophysics I: Conservation Laws}
 
@@ -182,37 +182,103 @@ actor can love and/or hate itself.) Love and hate are presumed to be
 non-negative quantities. Note that love and hate are not mutually
 exclusive, but are rather orthogonal quantities.
 
-\subsection{Conservation of Opinionatedness}
+We define a number of related concepts in Table \ref{tab-concepts}.
 
-We define the quantity {\em active opinionatedness of $a$}, which is
-the sum of the squared love and hate values of $a$ for all subsets of
+\begin{table}
+\label{tab-concepts}
+\begin{tabular}[c]{|m{0.75in}|m{0.5in}|m{2in}|m{0.75in}|}
+\hline
+Concept & Symbol & Definition & Analogue from traditional physics\\
+\hline
+$a$ loves $B$ & $l(a, B)$ & Accumulated positive emotion & Position\\
+\hline
+$a$ hates $B$ & $h(a, B)$ & Accumulated negative emotion & Position\\
+\hline
+$a$ likes $B$ & $\dot{l}(a, B)$ & Positive emotion being actively experienced by a subject (time derivative of love) & Velocity\\
+\hline
+$a$ dislikes $B$ & $\dot{h}(a, B)$ & Negative emotion being actively experienced by a subject (time derivative of hate) & Velocity\\
+\hline
+$B$ helps $a$ & $\ddot{l}(a, B)$ & Positive emotion being actively caused in a subject (second time derivative of love) 
+ & Acceleration\\
+\hline
+$B$ hurts $a$ & $\ddot{h}(a, B)$ & Negative emotion being actively caused by a subject (second time derivative of hate) 
+ & Acceleration\\
+\hline
+$a$'s active subjective energy & $\AAA(a)$ & Total amount of subjective energy bound up in the current experience of the subject
+& Kinetic energy \\
+\hline
+Potential subjective energy & $\PPP$ & ???
+& Potential energy \\
+\hline
+\end{tabular}
+\caption{Some useful concepts}
+\end{table}
+
+\subsection{Conservation of Subjective Energy}
+
+We define the quantity {\em active subjective energy of $a$}, which is
+the sum of the squared like and dislike values of $a$ for all subsets of
 the network:
-$$op(a) = \frac{1}{2} \sum_B l(a, B)^2 + h(a, B)^2.$$ We also define the {\em mindshare} of $B$ in $a$'s mind to be
-$$ms(a, B) = \frac{l(a, B)^2 + h(a, B)^2}{2 \cdot op(a)}.$$
+$$\AAA(a) = \frac{1}{2} \sum_B \dot{l}(a, B)^2 + \dot{h}(a, B)^2.$$ 
+We define the {\em active subjective energy of the network} to be
+$$\AAA = \sum_a \AAA(a).$$ 
 
-We define the {\em active opinionatedness} of the network to be
-$$\OOO_{act} = \sum_a op(a).$$ 
-
-Active opinionatedness serves roughly the same role in the
+Active subjective energy serves roughly the same role in the
 ethicophysics as kinetic energy does in traditional physics. We also
-need to define {\em potential opinionatedness} $\OOO_{pot}$, which
+need to define {\em potential subjective energy} $\PPP$, which
 serves the same role in the ethicophysics as potential energy does in
 traditional physics. We do not yet know how to define all possible
-sources of future love and hate, so we cannot give a rigorous
-specification of how to compute potential opinionatedness. It can,
+sources of future like and fear, so we cannot give a rigorous
+specification of how to compute potential subjective energy. It can,
 however be defined rigorously, by requiring that the {\em total
-  opinionatedness}
-$$\OOO_{act} + \OOO_{pot}$$ be conserved, and simply watching what
-$\OOO_{act}$ does over time.
+  subjective energy}
+$$\AAA + \PPP$$ be conserved, and simply watching what $\AAA$ does
+over time to deduce the laws of ethicophysics.
 
-Total opinionatedness is conserved by definition, as long as the set
+Total subjective energy is conserved by definition, as long as the set
 of network participants does not change. This can be achieved by
 defining the love and hate values of an absent participant (e.g., a
 dead person, or a person yet to be born) to be something relatively
 arbitrary, and then simply considering all participants that ever have
 or ever will exist. For instance, we could define the love and hate
 values of a non-alive person to be the average love and hate they
-experienced or will experience over the course of their lives.
+experienced or will experience over the course of their lives, or some
+other constant value. (Note that this will have the effect that
+non-alive actors experience no like or dislike, which makes sense.)
+
+Potential subjective energy serves roughly the same role in the
+ethicophysics as potential energy does in traditional
+physics. Potential subjective energy generally arises from cost
+functions and reward functions - objectives deemed desirable by a
+particular mind will generally be modeled by some cost function, which
+then drives goal-directed actors to minimize the costs and maximize
+the reward, thus making the behavior of the actor at least marginally
+predictable in theory. We thus arrive in a situation where theories
+from traditional physics such as minimum-action principles can be
+applied to the freely chosen actions of actors in an actor network.
+
+\subsection{Playing Favorites: Weighted Subjective Energy}
+
+Let $w_a$ be the weight of actor $a$ according to some external
+observer. It is presumed that God does not apply non-even weighting
+(because of the equality of souls), but there is nothing stopping the
+rest of us from having favorites.
+
+We define the quantity {\em emotion}, which is the {\em weighted
+  active subjective energy as perceived by $a$}. This is the same as
+active subjective energy, but weighted by how much $a$ cares about
+$b$'s opinion:
+$$\AAA_a = \frac{1}{2} \sum_{b} w_a(b) \sum_{C} \dot{l}(a, B)^2 + \dot{h}(a, B)^2.$$ 
+As the name suggests, weighting plays a similar role in the
+ethicophysics as mass plays in traditional physics. 
+
+We similarly define $\PPP_a$. We thus have laws of emotion for each
+specific actor that determine their behavior in particular. The laws
+of emotion for ethicophysics are as follows: let $\SSS_a$ be the
+subjective Lagrangian $\SSS_a = \AAA_a - \PPP_a$. Then we have
+$$\frac{\partial \SSS}{\partial x} = \frac{d}{dt} \frac{\partial
+  \SSS}{\partial \dot{x}}.$$
+Here $x$ can be either a physical or an ethical variable.
 
 \subsection{The Golden Theorem: Actions Have Consequences} 
 
@@ -232,12 +298,28 @@ experienced or will experience over the course of their lives.
   system, and $\UUU$ is the potential energy of that system. Here $q$
   is the physical state of the system in generalized coordinates.
 
-  Let $\SSS = \OOO_{ac} - \OOO_{pot}$ be the ``subjective'',
-  ``ethical'' Lagrangian of the system. This is supposed to depend
-  upon the generalized coordinates $q, \dot{q}, t$ of the system and
+  Let $\SSS = \sum_a \SSS_a$ be the ``subjective'', ``ethical''
+  Lagrangian of the system. This is supposed to depend upon the
+  generalized coordinates $q, \dot{q}, t$ of the physical system and
   the ``subjective coordinates'' $s, \dot{s}, t$ (which are supposed
   to have no physical realization that is legible to the laws of
-  physics under consideration). 
+  physics under consideration). We thus write $\SSS(q, \dot{q}, s,
+  \dot{s}, t)$.
+
+  At every point in time $t$ each actor emits both a {\em physical
+    action} $u$ and a {\em speech action} $v$. The idea is that both
+  the physical action and the speech action are caused by the contents
+  of the actor's mind. Actions are assumed to be a continuous output
+  of the actuators attached to the mind (e.g., motors for a robot,
+  muscles for a human). Note that actions are consistent with the laws
+  of traditional physics, so that e.g. every muscle contraction exerts
+  a balanced set of forces.
+
+  Speech acts are assumed to be a point process that is instantaneous,
+  and directed at some subset of the actors in the actor network. We
+  assume for the moment that speech acts can be directed at arbitary
+  subsets of the actor network, since this is basically possible given
+  the current status of information technology.
 
   Let $\tau(t)$ (called the ``tweak'') be a continuous symmetry of the
   physical system, i.e., for infinitesimal $\epsilon$, the
@@ -249,96 +331,76 @@ experienced or will experience over the course of their lives.
   leaves the Lagrangian unaffected.
 
   Let $\varphi(s)$ (called the ``flip'') be a discrete non-physical
-  symetry of the subjective energy function at time $t_{\varphi}$,
+  symmetry of the subjective energy function at time $t_{\varphi}$,
   i.e., a function such that, for one brief instant of time,
   $$\SSS(q, \dot{q}, \varphi(s), \frac{d}{dt} \varphi(s), t_{\varphi})
   = \SSS(q, \dot{q}, s, \dot{s}, t_{\varphi}).$$ Since $\SSS$ is a
-  function of network participant love and hate values, it is
-  generally the case that $\varphi$ will be a permutation of the
-  actors in the actor network.
+  function of network participant love and hate values and their time
+  derivatives, it will often prove useful to use a $\varphi$ that is a
+  permutation of the actors in the actor network - we call these {\em
+    empathy transforms}.
 
-  Define the following quantity (the ``God Lagrangian''):
-  $$\GGG(q, \dot{q}, s, \dot{s}, t) = \LLL(q, \dot{q}, t) +
-  \SSS(q, \dot{q}, s, \dot{s}, t) - \SSS(q, \dot{q}, \varphi(s), \frac{d}{dt}\varphi(s), t)$$
-
+  The ethicophysical Lagrangian is then
+  $$\EEE = \LLL + \SSS.$$ The laws of motion and emotion together
+  combine to establish the following:
+  $$\frac{\partial \EEE}{\partial x} = \frac{d}{dt} \frac{\partial
+    \EEE}{\partial \dot{x}}.$$
+  Define the following quantity (the {\em Gallifreyan}):
+  \begin{align*}
+\GGG(q, \dot{q}, s, \dot{s}, t) &= \EEE - \EEE_\varphi\\
+&= \SSS(q, \dot{q}, s, \dot{s}, t) - \SSS(q, \dot{q}, \varphi(s), \frac{d}{dt}\varphi(s), t)\\
+\end{align*}
   By Noether's Theorem \cite{noether}, the following quantity is
   conserved:
-  $$\sum_{i=1}^n \frac{\partial \LLL}{\partial \dot{q}_i} \tau_i.$$
-
-  By Noether's Theorem applied to the modified Lagrangian, the same is
-  true of the quantity
-  $$\sum_{i=1}^n \frac{\partial \GGG}{\partial \dot{q}_i} (\varphi
-  \circ \tau)_i + \sum_{j=1}^m \frac{\partial \GGG}{\partial
-    \dot{s}_j} (\varphi \circ \tau)_j.$$ Note that, since the
-  quantities $s_j$ are presumed to be causally upstream from the
-  physical world, it can be safely assumed that $\varphi $ has no
-  effect on the values of the $q$'s, while $\tau$ probably does have
-  an effect on the $s$'s and thus the following quantity is conserved:
-    $$\sum_{i=1}^n \frac{\partial \GGG}{\partial \dot{q}_i} \tau_i +
-  \sum_{j=1}^m \frac{\partial \GGG}{\partial \dot{s}_j} (\varphi \circ
-  \tau)_j.$$
-
+  $$\sum_{i=1}^k \frac{\partial \EEE}{\partial \dot{q}_i} \tau_i +
+  \sum_{j=1}^n \frac{\partial \EEE}{\partial \dot{s}_j} \tau_i.$$ By
+  Noether's Theorem applied to the modified Lagrangian $\EEE_\varphi$,
+  the same is true of the quantity
+  $$\sum_{i=1}^k \frac{\partial \EEE_\varphi}{\partial \dot{q}_i}
+  \tau_i + \sum_{j=1}^n \frac{\partial \EEE_\varphi}{\partial
+    \dot{s}_j} \tau_i.$$ 
+  Subtracting one from the other, we learn that the following quantity is conserved:
+  $$\sum_{i=1}^k \frac{\partial \GGG}{\partial \dot{q}_i} \tau_i +
+  \sum_{j=1}^n \frac{\partial \GGG}{\partial \dot{s}_j} \tau_i.$$
   
-  After doing some algebra, we arrive at the conclusion that the
-  following quantity is conserved by the laws of ethicophysics:
-  $$\sum_{i=1}^n \frac{\partial \SSS}{\partial \dot{q}_i} \tau_i -
-  \sum_{i=1}^n \frac{\partial \SSS_\varphi}{\partial \dot{q}_i} \tau_i +
-  \sum_{i=1}^m \frac{\partial \SSS}{\partial \dot{s}_i} (\varphi \circ \tau)_i -
-  \sum_{i=1}^m \frac{\partial \SSS_\varphi}{\partial \dot{s}_i} (\varphi \circ \tau)_i,
-  $$
-  which simplifies to the equation
-  $$\sum_{i=1}^n \frac{\partial \SSS}{\partial \dot{q}_i} \tau_i +
-  \sum_{i=1}^m \frac{\partial \SSS}{\partial \dot{s}_i} (\varphi \circ \tau)_i =
-  \sum_{i=1}^n \frac{\partial \SSS_\varphi}{\partial \dot{q}_i} \tau_i +
-  \sum_{i=1}^m \frac{\partial \SSS_\varphi}{\partial \dot{s}_i} (\varphi \circ \tau)_i,
-  $$
-
+  Note that the flip $\varphi$ is nonphysical, so that $\varphi$ has
+  no effect on the ``objective'', ``physical'' $q$'s while the tweak
+  $\tau$ probably does have an effect on the $s$'s.
+  
   We are now ready to finish the proof. Consider some binary decision
   that can be made, and consider the two possible timestreams that
-  will follow making either choice. Let $s$ be the quantity of respect
-  that God feels for one, defined as $l(\mathrm{God}, a) -
-  h(\mathrm{God}, a)$. We can call this the {\em coherent extrapolated
-    conscience} of the actor. (We note that it has an imperfect
-  relationship to the subjective experience of the conscience with
-  which most humans are familiar.)
+  will follow making either choice. Let $C_a$ be the quantity of
+  self-respect that one feels for oneself at any given moment, defined
+  as $l(a, a) - h(a, a)$. We can call this the {\em
+    conscience} of the actor. (We note that it is definitionally
+  equivalent to the subjective experience of the conscience with which
+  most humans are familiar.)
+
+  Suppose the action taken has some victim $b$. Then take the flip
+  $\varphi$ to be the empathy transformation that swaps the subjective
+  variables of $a$ and $b$.
 
   Suppose, further, that the decision has no consequences that are
   perceivable in the external physical world after some time period
   $t_{\mathrm{hide the body}}$ has elapsed. Thus, after this point,
-  $\SSS$ ``should'' no longer depend on $q$.
+  $\GGG$ should no longer depend on any $q$ or on any $s$ other than
+  $\dot{l}(a, a)$, $\dot{l}(a, b)$, $\dot{l}(b, a)$, $\dot{l}(b, b)$,
+  and the analogous dislike values.
 
-  There is then an additional conserved quantity (in addition to
-  $\SSS$), which is the ``coherent extrapolated conscience momentum
-  with respect to $\varphi$''
+  There is then an additional conserved quantity, which is the {\em
+    karma with respect to the flip $\varphi$}
   \begin{align*}
-CECM_\varphi &= \frac{\partial (\SSS - \SSS_\varphi)}{\partial \dot{s}} s. \\
-\intertext{We can calculate $CECM_\varphi$, and find it to be equal to}
-&= \qquad \frac{\partial \SSS}{\partial \dot{l}(\mathrm{God}, a)} \frac{\partial \dot{l}(\mathrm{God}, a)}{\partial \dot{s}}\\
-&\qquad + \frac{\partial \SSS}{\partial \dot{h}(\mathrm{God}, a)} \frac{\partial \dot{h}(\mathrm{God}, a)}{\partial \dot{s}}\\
-&\qquad - \frac{\partial \SSS_\varphi}{\partial \dot{l}(\mathrm{God}, a)} \frac{\partial \dot{l}(\mathrm{God}, a)}{\partial \dot{s}}\\
-&\qquad - \frac{\partial \SSS_\varphi}{\partial \dot{h}(\mathrm{God}, a)} \frac{\partial \dot{h}(\mathrm{God}, a)}{\partial \dot{s}}\\
-\intertext{Assuming that the coordinates $s$ capture all meaningful
-  ethical variables (and in particular that $\OOO_{pot}$ depends only
-  on $s$ and not on $\dot{s}$), this simplifies to}
-&= \qquad \frac{\partial \OOO_{act}}{\partial \dot{l}(\mathrm{God}, a)} \frac{\partial \dot{l}(\mathrm{God}, a)}{\partial \dot{s}}\\
-&\qquad + \frac{\partial \OOO_{act}}{\partial \dot{h}(\mathrm{God}, a)} \frac{\partial \dot{h}(\mathrm{God}, a)}{\partial \dot{s}}\\
-&\qquad - \frac{\partial \OOO_{act, \varphi}}{\partial \dot{l}(\mathrm{God}, a)} \frac{\partial \dot{l}(\mathrm{God}, a)}{\partial \dot{s}}\\
-&\qquad - \frac{\partial \OOO_{act, \varphi}}{\partial \dot{h}(\mathrm{God}, a)} \frac{\partial \dot{h}(\mathrm{God}, a)}{\partial \dot{s}}\\
-&= \qquad l(\mathrm{God}, a) \\
-&\qquad - h(\mathrm{God}, a) \\
-&\qquad - l(\mathrm{God}, \pi_\varphi(a)) \\
-&\qquad + h(\mathrm{God}, \pi_\varphi(a)) \\
+K_\varphi &= \sum_{x\in \{a, b\}} \sum_{y\in \{a, b\}} \frac{\partial \GGG}{\partial \dot{l}(x, y)} l(x, y) + \frac{\partial \GGG}{\partial \dot{h}(x, y)} h(x, y)  \\
+\intertext{Let us assume that the potential subjective energy depends
+  only on $l$ and $h$, rather than on $\dot{l}$ and $\dot{h}$. Then we
+  know that the partial derivatives come only from the active
+  subjective energy terms, which yields }
+&= w_a \dot{l}(a, b) l(a, b) - w_b \dot{l}(b, a) l(b, a) + w_a \dot{h}(a, b) h(a, b) - w_b \dot{h}(b, a) h(b, a) \\
   \end{align*}
 
 This yields what is essentially a proof of Newton's third law (every
 action has an equal and opposite reaction), but in the ethical domain:
-every action has an equal and opposite {\em ethical} reaction. In more
-poetic terms, this is a proof that God thinks ``whatsoever you do to
-the least of my brethren, that you do unto me''. God's opinion of the
-perpetrator of an unconscionable act with a victim changes by an
-amount equal to and opposite to the change in his opinion of the
-victim of the same act. (Take $\pi_\varphi$ to be the permutation that
-switches the roles of perpetrator and victim.)
+every action has an equal and opposite {\em ethical} reaction. 
   
 This same principle can be applied to any binary decision. The total
 coherent extrapolated conscience momentum will be the same in either
@@ -348,31 +410,12 @@ with a clear right answer, the predominant sign of $\frac{\partial
 sign of $\frac{\partial \SSS_\varphi}{\partial s}$, assuming that
 $\pi_\varphi$ is a permutation that switches the positions of
 beneficiaries and victims. Thus, making the wrong decision will have
-hugely negative consequences for one's conscience, as expected. These
-consequences are not permanent; one can be forgiven sins, but in
-general only when one has overcome the sin and made recompense.
+hugely negative consequences for one's karma, as expected. These
+consequences are not necessarily irreversible; one can be forgiven
+sins, but in general only when one has overcome the sin and made
+recompense.
   
 \end{proof}
-
-\subsection{Playing Favorites: Weighted Opinionatedness}
-
-Let $w_a$ be the weight of $a$ according to some external observer. It
-is presumed that God does not apply non-even weighting (because of the
-equality of souls), but there is nothing stopping the rest of us from
-having favorites.
-
-We define the quantity {\em weighted active opinionatedness of $a$},
-which is the sum of the squared love and hate values of $a$ for all
-subsets of the network, weighted by the weight of $a$:
-$$op_w(a) = \frac{1}{2} w_a \sum_B l(a, B)^2 + h(a, B)^2.$$ 
-
-As the name suggests, weighting plays a similar role in the
-ethicophysics as mass plays in traditional physics. More specifically,
-we can defined a weighted coherent extrapolated conscience, which is
-sort of the fully considered opinion of the smartest possible version
-of whatever entity chose the weighting function. The Golden Theorem
-can then be extended to show that Newton's third law holds, not only
-for God's opinion, but for the opinion of any omniscient observer.
 
 \section{Discussion}
 
