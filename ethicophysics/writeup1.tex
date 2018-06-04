@@ -221,9 +221,9 @@ Potential subjective energy & $\PPP$ & ???
 \subsection{Conservation of Subjective Energy}
 
 We define the quantity {\em active subjective energy of $a$}, which is
-the sum of the squared like and dislike values of $a$ for all subsets of
-the network:
-$$\AAA(a) = \frac{1}{2} \sum_B \dot{l}(a, B)^2 + \dot{h}(a, B)^2.$$ 
+the difference of the squared like and dislike values of $a$, summed
+over all subsets of the network:
+$$\AAA(a) = \frac{1}{2} \sum_B \dot{l}(a, B)^2 - \dot{h}(a, B)^2.$$ 
 We define the {\em active subjective energy of the network} to be
 $$\AAA = \sum_a \AAA(a).$$ 
 
@@ -272,7 +272,7 @@ We define the quantity {\em emotion}, which is the {\em weighted
   active subjective energy as perceived by $a$}. This is the same as
 active subjective energy, but weighted by how much $a$ cares about
 $b$'s opinion:
-$$\AAA_a = \frac{1}{2} \sum_{b} w_a(b) \sum_{C} \dot{l}(a, B)^2 + \dot{h}(a, B)^2.$$ 
+$$\AAA_a = \frac{1}{2} \sum_{b} w_a(b) \sum_{C} \dot{l}(a, B)^2 - \dot{h}(a, B)^2.$$ 
 As the name suggests, weighting plays a similar role in the
 ethicophysics as mass plays in traditional physics. 
 
@@ -398,20 +398,34 @@ K_\varphi &= \sum_{x\in \{a, b\}} \sum_{y\in \{a, b\}} \frac{\partial \GGG}{\par
 \intertext{Let us assume that the potential subjective energy depends
   only on $l$ and $h$, rather than on $\dot{l}$ and $\dot{h}$. Then we
   know that the partial derivatives come only from the active
-  subjective energy terms, which yields }
-&= w_a \dot{l}(a, b) l(a, b) - w_b \dot{l}(b, a) l(b, a) + w_a \dot{h}(a, b) h(a, b) - w_b \dot{h}(b, a) h(b, a) \\
+  subjective energy terms, which yields the conserved quantity}
+&= w_a \dot{l}(a, b) l(a, b) - w_b \dot{l}(b, a) l(b, a) - w_a \dot{h}(a, b) h(a, b) + w_b \dot{h}(b, a) h(b, a) \\
+&= w_a (\dot{l}(a, b) l(a, b) - \dot{h}(a, b) h(a, b)) - w_b (\dot{l}(b, a) l(b, a) - \dot{h}(b, a) h(b, a)) \\
   \end{align*}
+
+If we define the quantity {\em opinion} to be
+$$op(a, b) = \dot{l}(a, b) l(a, b) - \dot{h}(a, b) h(a, b),$$
+then karma is just
+$$K_\varphi = w_a op(a, b) - w_b op(b, a)$$
 
 This yields what is essentially a proof of Newton's third law (every
 action has an equal and opposite reaction), but in the ethical domain:
-every action has an equal and opposite {\em ethical} reaction. 
+every action has an equal and opposite {\em ethical} reaction. If we
+take the most obvious interpretation, it seems uninteresting because
+e.g. if you kill someone, their opinion of you might be thought not to
+be relevant any more. However, this is a naive reading of the
+conservation of karma. In reality, we all of us are always imagining
+what other people think and feel. In the post-Jesus world, most actors
+are aware enough of something like the Golden Theorem in order to be
+able to infer the opinion of people they hurt, and thus $op(b, a)$
+matters to $a$ even when $b$ is dead.
   
 This same principle can be applied to any binary decision. The total
-coherent extrapolated conscience momentum will be the same in either
-case (i.e., in both timestreams). But, assuming the decision is one
-with a clear right answer, the predominant sign of $\frac{\partial
-  \SSS}{\partial s}$ will generally be the opposite of the predominant
-sign of $\frac{\partial \SSS_\varphi}{\partial s}$, assuming that
+subjective energy will be the same in either case (i.e., in both
+timestreams). But, assuming the decision is one with a clear right
+answer, the predominant sign of $\frac{\partial \SSS}{\partial s}$
+will generally be the opposite of the predominant sign of
+$\frac{\partial \SSS_\varphi}{\partial s}$, assuming that
 $\pi_\varphi$ is a permutation that switches the positions of
 beneficiaries and victims. Thus, making the wrong decision will have
 hugely negative consequences for one's karma, as expected. These
